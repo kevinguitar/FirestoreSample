@@ -24,7 +24,6 @@ class TodoAdapter(private val listener: Listener?) :
     fun updateList(newList: List<Thing>) {
         DiffUtil.calculateDiff(object : DiffUtil.Callback() {
             override fun getOldListSize(): Int = todoList.size
-
             override fun getNewListSize(): Int = newList.size
 
             override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

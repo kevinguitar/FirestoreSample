@@ -62,12 +62,12 @@ class TodoViewModel : ViewModel() {
         firestore
             .collection(TABLE_THINGS)
             .addSnapshotListener { querySnapshot, _ ->
-                querySnapshot?.documentChanges?.forEach {
-                    when (it.type) {
-                        DocumentChange.Type.ADDED -> todoList.value?.add(it.toThing())
-                        DocumentChange.Type.REMOVED -> todoList.value?.remove(it.toThing())
+                querySnapshot?.documentChanges?.forEach { doc ->
+                    when (doc.type) {
+                        DocumentChange.Type.ADDED -> todoList.value?.add(doc.toThing())
+                        DocumentChange.Type.REMOVED -> todoList.value?.remove(doc.toThing())
                         DocumentChange.Type.MODIFIED -> {
-                            it.toThing().apply {
+                            doc.toThing().apply {
                                 val modifiedItem = todoList.value?.find { it.id == this.id }
                                 if (modifiedItem != null) {
                                     todoList.value?.remove(modifiedItem)
